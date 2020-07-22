@@ -1,0 +1,40 @@
+.login-container {
+    background: url(../img/login_background.jpg);
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login-container .aside-right {
+    height: 100vh;
+    background-color: #fff;
+    width: 30%;
+}
+
+.login-container .aside-right .header h3 {
+    font-size: 40px;
+    font-family: sans-serif;
+    color: #333;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.login-container .input-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-container .input-name-wrapper .input-wrapper {
+    width: 48%;
+}
+
+#login-form {
+    padding: 20px;
+}
+
+.login-container .aside-right .form-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,40 @@
+.register-container {
+    background: url(../img/thing_to_do.jpg);
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.register-container .aside-right {
+    height: 100vh;
+    background-color: #fff;
+    width: 30%;
+}
+
+.register-container .aside-right .header h3 {
+    font-size: 40px;
+    font-family: sans-serif;
+    color: #333;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.register-container .input-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-container .input-name-wrapper .input-wrapper {
+    width: 48%;
+}
+
+#register-form {
+    padding: 20px;
+}
+
+.register-container .aside-right .form-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
