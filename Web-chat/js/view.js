@@ -21,6 +21,7 @@ view.setActiveScreen = (screenName) => {
             redirectToRegister.addEventListener('click', (e) => {
                 view.setActiveScreen('registerScreen')
             })
+
             break;
         case 'registerScreen':
             document.getElementById('app').innerHTML = components.registerScreen
@@ -40,6 +41,10 @@ view.setActiveScreen = (screenName) => {
             redirectToLogin.addEventListener('click', (e) => {
                 view.setActiveScreen('loginScreen')
             })
+            break;
+        case 'chatScreen':
+            document.getElementById('app').innerHTML = components.chatScreen
+            document.querySelector('.welcome-user').innerHTML = `Welcome to ${model.currentUser.displayName}`
             break;
     }
 }
