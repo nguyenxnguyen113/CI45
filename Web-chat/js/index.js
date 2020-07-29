@@ -13,6 +13,23 @@ const init = () => {
     firebase.initializeApp(firebaseConfig);
     console.log(firebase.app().name)
     console.log('Windown loaded')
-    view.setActiveScreen('registerScreen')
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            if (user.emailVerified) {
+                model.currentUser = {
+                    displayName: user.displayName,
+                    email: user.email
+                }
+                view.setActiveScreen('chatScreen')
+            } else {
+                view.setActiveScreen('loginScreen')
+                alert('Please verify your email')
+            }
+        } else {
+            view.setActiveScreen('loginScreen')
+        }
+    });
 }
 window.onload = init
