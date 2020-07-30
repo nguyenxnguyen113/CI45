@@ -7,6 +7,7 @@ components.registerScreen = `
 <div class="aside-right">
   <div class="header">
     <h3>MindX chat</h3>
+    
   </div>
   <form id="register-form">
     <div class="input-name-wrapper">
@@ -83,6 +84,7 @@ components.chatScreen = `
 <div class="chat-container">
 <div class="header">
     MindX Chat
+    <button class="log-out"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
 </div>
 <div class="main">
     <div class="conversation-detail">

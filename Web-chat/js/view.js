@@ -63,6 +63,14 @@ view.setActiveScreen = (screenName) => {
                     sendMessageForm.message.value = ""
                 }
             })
+            const logOut = document.querySelector('.log-out')
+            logOut.addEventListener('click', (e) => {
+                e.preventDefault()
+                firebase.auth().signOut().then(() => {
+                    console.log('user signed out')
+                    view.setActiveScreen('loginScreen')
+                })
+            })
             break;
     }
 }
