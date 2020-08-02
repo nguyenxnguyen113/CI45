@@ -27,17 +27,23 @@ model.login = async(dataLogin) => {
     try {
         const response = await firebase.auth().signInWithEmailAndPassword(dataLogin.email, dataLogin.password)
         console.log(response)
-        if (response.user.emailVerified === false) {
-            alert('Please verify your email')
-        } else {
-            model.currentUser = {
-                displayName: response.user.displayName,
-                email: response.user.email
-            }
-            view.setActiveScreen('chatScreen')
-        }
+            // if (response.user.emailVerified === false) {
+            //     alert('Please verify your email')
+            // } else {
+            //     model.currentUser = {
+            //         displayName: response.user.displayName,
+            //         email: response.user.email
+            //     }
+            //     view.setActiveScreen('chatScreen')
+            // }
     } catch (err) {
         console.log(err)
         alert(err.message)
     }
+}
+model.addMessage = (message) => {
+    const dataToUpdate = {
+        messages: firebase.firestore.FieldValue.arrayUnion(message)
+    }
+    firebase.firestore().collection('conversations').doc('5Yus4IAlPldWLsFGn8OM').update(dataToUpdate)
 }
