@@ -83,6 +83,7 @@
     border-radius: 5px;
     max-width: 40%;
     width: max-content;
+    word-break: break-all;
 }
 
 .chat-container .message-container.their .content {
