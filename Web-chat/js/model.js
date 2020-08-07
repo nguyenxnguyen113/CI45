@@ -1,5 +1,8 @@
 const model = {}
 model.currentUser = undefined
+model.conversations = undefined
+model.currentConversation = undefined
+model.collectionName = 'conversations'
 model.register = async(data) => {
     try {
         await firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
@@ -45,5 +48,42 @@ model.addMessage = (message) => {
     const dataToUpdate = {
         messages: firebase.firestore.FieldValue.arrayUnion(message)
     }
-    firebase.firestore().collection('conversations').doc('5Yus4IAlPldWLsFGn8OM').update(dataToUpdate)
+    firebase.firestore().collection(model.collectionName).doc('5Yus4IAlPldWLsFGn8OM').update(dataToUpdate)
+}
+model.loadConversations = async() => {
+    const response = await firebase.firestore().collection(model.collectionName).where('users', 'array-contains', model.currentUser.email).get()
+    model.conversations = getDataFromDocs(response.docs)
+    if (model.conversations.length > 0) {
+        model.currentConversation = model.conversations[0]
+        view.showCurrentConversation()
+    }
+}
+model.listenConversationsChange = () => {
+    let isFisrstRun = true
+    firebase.firestore().collection(model.collectionName).where('users', 'array-contains', model.currentUser.email).onSnapshot((res) => {
+        if (isFisrstRun) {
+            isFisrstRun = false
+            return
+        }
+        const docChanges = res.docChanges()
+        console.log(docChanges)
+        for (oneChange of docChanges) {
+            const type = oneChange.type
+                //update lai model conversations
+            if (type === "modified") {
+                const docData = getDataFromDoc(oneChange.doc)
+                for (let i = 0; i < model.conversations.length; i++) {
+                    if (model.conversations[i].id === docData.id) {
+                        model.conversations[i] = docData
+                    }
+                }
+                if (docData.id === model.currentConversation.id) {
+                    model.currentConversation = docData
+                    const lastMessage = docData.messages[docData.messages.length - 1]
+                    view.addMessage(lastMessage)
+                    view.scrollToEnd()
+                }
+            }
+        }
+    })
 }

@@ -45,12 +45,6 @@ view.setActiveScreen = (screenName) => {
         case 'chatScreen':
             document.getElementById('app').innerHTML = components.chatScreen
             const sendMessageForm = document.getElementById('send-message-form')
-            const listMessages = view.getCurrentMessage();
-            listMessages.then((response) => {
-                for (let i = 0; i < response.length; i++) {
-                    view.addMessage(response[i]);
-                }
-            })
             sendMessageForm.addEventListener('submit', (e) => {
                 e.preventDefault()
                 const message = {
@@ -61,11 +55,14 @@ view.setActiveScreen = (screenName) => {
                 if (message.content.trim() === '') {
                     alert('Please type something to send message')
                 } else {
-                    view.addMessage(message)
+                    // view.addMessage(message)
+
                     model.addMessage(message)
                     sendMessageForm.message.value = ""
                 }
             })
+            model.loadConversations()
+            model.listenConversationsChange()
             const logOut = document.querySelector('.log-out')
             logOut.addEventListener('click', (e) => {
                 e.preventDefault()
@@ -102,11 +99,18 @@ view.addMessage = (message) => {
      `
     }
     document.querySelector('.list-messages').appendChild(messageWrapper)
+    view.scrollToEnd()
+}
+view.showCurrentConversation = () => {
+    // change conversation name
+    document.getElementsByClassName('conversation-header')[0].innerText = model.currentConversation.title
+
+    // Print all conversation to screen
+    for (message of model.currentConversation.messages) {
+        view.addMessage(message)
+    }
+}
+view.scrollToEnd = () => {
     const listMessage = document.querySelector('.list-messages')
     listMessage.scrollTop = listMessage.scrollHeight
-}
-view.getCurrentMessage = async() => {
-    const messages = await firebase.firestore().collection('conversations').get();
-    const listMessages = messages.docs[0].data().messages;
-    return listMessages;
 }
