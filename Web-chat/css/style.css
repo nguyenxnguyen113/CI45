@@ -9,6 +9,7 @@
     padding: 10px 15px;
     border-radius: 5px;
     width: 100%;
+    outline: none;
 }
 
 .input-wrapper {
@@ -29,4 +30,18 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.header {
+    text-align: center;
+    height: 64px;
+    background: #037BFE;
+    line-height: 64px;
+    color: #ffffff;
+    font-size: 28px;
+}
+
+.btn-light {
+    background: none;
+    color: #333;
 }
