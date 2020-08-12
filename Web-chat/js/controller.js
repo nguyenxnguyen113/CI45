@@ -47,3 +47,24 @@ controller.login = (dataLogin) => {
         model.login(dataLogin)
     }
 }
+controller.createConversation = (conservation) => {
+    if (conservation.title.trim() === '') {
+        view.setErrorMessage('conversation-name-error', 'Please input your title message')
+    } else {
+        view.setErrorMessage('conversation-name-error', '')
+    }
+    if (conservation.friend.trim() === '') {
+        view.setErrorMessage('conversation-email-error', 'Please input your friend email')
+    } else {
+        view.setErrorMessage('conversation-email-error', '')
+    }
+    if (conservation.title !== '' && conservation.friend !== '') {
+        model.createConversation({
+            title: conservation.title,
+            users: [conservation.friend, model.currentUser.email],
+            createdAt: new Date().toLocaleString(),
+            messages: []
+        })
+    }
+
+}

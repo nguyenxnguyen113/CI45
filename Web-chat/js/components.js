@@ -83,24 +83,59 @@ components.loginScreen = `
 components.chatScreen = `
 <div class="chat-container">
 <div class="header">
-    MindX Chat
-    <button class="log-out"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+  MindX Chat
+  <button class="log-out"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
 </div>
 <div class="main">
-    <div class="conversation-detail">
-        <div class="conversation-header">
-            First conversation
-        </div>
-        <div class="list-messages">
-
-        </div>
-        <form id="send-message-form">
-            <div class="input-wrapper">
-                <input type="text" placeholder="type a message" name="message">
-                <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-            </div>
-        </form>
+  <div class="aside-left">
+    <div class="create-conversation">
+      <button class="btn">+ New conversation</button>
+      
     </div>
+    <div class="list-conversations">
+
+    </div>
+  </div>
+  <div class="conversation-detail">
+    <div class="conversation-header">
+      First conversation
+    </div>
+    <div class="list-messages">
+    </div>
+    <form id="send-message-form">
+      <div class="input-wrapper">
+        <input type="text" name="message"
+          placeholder="Type a message">
+      </div>
+      <button type="submit">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      </button>
+    </form>
+  </div>
+</div>
+</div>
+`
+components.createConversationScreen = `
+<div class="create-conversation-container">
+<div class="header">
+    MindX chat
+</div>
+<div class="main" style="padding: 50px 20%;">
+    <form id="create-conversation-form">
+        <div>
+            Create a new conversation
+        </div>
+        <div class="input-wrapper">
+            <input type="text" placeholder="Conversation name" name="conversationTitle">
+            <div class="error" id="conversation-name-error"></div>
+        </div>
+        <div class="input-wrapper">
+            <input type="text" placeholder="Friend email" name="conversationEmail">
+            <div class="error" id="conversation-email-error"></div>
+        </div>
+        <button class='btn' type="submit">Save</button>
+        <button class='btn btn-light' type="button" id="back-to-chat">Cancel</button>
+    </form>
 </div>
 </div>
 `

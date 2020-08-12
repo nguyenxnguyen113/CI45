@@ -1,5 +1,5 @@
 const view = {}
-view.setActiveScreen = (screenName) => {
+view.setActiveScreen = (screenName, fromCreateConversation = false) => {
     switch (screenName) {
         case 'welcomeScreen':
             document.getElementById('app')
@@ -50,7 +50,7 @@ view.setActiveScreen = (screenName) => {
                 const message = {
                     content: sendMessageForm.message.value,
                     owner: model.currentUser.email,
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date().toLocaleString()
                 }
                 if (message.content.trim() === '') {
                     alert('Please type something to send message')
@@ -61,8 +61,13 @@ view.setActiveScreen = (screenName) => {
                     sendMessageForm.message.value = ""
                 }
             })
-            model.loadConversations()
-            model.listenConversationsChange()
+            if (!fromCreateConversation) {
+                model.loadConversations()
+                model.listenConversationsChange()
+            } else {
+                view.showConversations()
+                view.showCurrentConversation()
+            }
             const logOut = document.querySelector('.log-out')
             logOut.addEventListener('click', (e) => {
                 e.preventDefault()
@@ -70,6 +75,25 @@ view.setActiveScreen = (screenName) => {
                     console.log('user signed out')
                     view.setActiveScreen('loginScreen')
                 })
+            })
+            document.querySelector('.create-conversation .btn').addEventListener('click', () => {
+                view.setActiveScreen('createConversationScreen')
+            })
+            break;
+        case 'createConversationScreen':
+            document.getElementById('app').innerHTML = components.createConversationScreen
+            document.getElementById('back-to-chat').addEventListener('click', () => {
+                view.setActiveScreen('chatScreen', true)
+            })
+            const createConversationForm = document.getElementById('create-conversation-form')
+            createConversationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const data = {
+                    title: createConversationForm.conversationTitle.value,
+                    friend: createConversationForm.conversationEmail.value,
+
+                }
+                controller.createConversation(data)
             })
             break;
     }
@@ -102,7 +126,8 @@ view.addMessage = (message) => {
     view.scrollToEnd()
 }
 view.showCurrentConversation = () => {
-    // change conversation name
+    document.querySelector('.list-messages').innerHTML = ""
+        // change conversation name
     document.getElementsByClassName('conversation-header')[0].innerText = model.currentConversation.title
 
     // Print all conversation to screen
@@ -113,4 +138,30 @@ view.showCurrentConversation = () => {
 view.scrollToEnd = () => {
     const listMessage = document.querySelector('.list-messages')
     listMessage.scrollTop = listMessage.scrollHeight
+}
+view.showConversations = () => {
+    for (oneConversation of model.conversations) {
+        view.addConversation(oneConversation)
+    }
+}
+view.addConversation = (conversation) => {
+    const conversationWrapper = document.createElement('div')
+    conversationWrapper.className = 'conversation cursor-pointer'
+    if (model.currentConversation.id == conversation.id) {
+        conversationWrapper.classList.add('current')
+    }
+    conversationWrapper.innerHTML = `
+       <div class="conversation-title">${conversation.title}</div>
+       <div class="conversation-num-user">${conversation.users.length} users</div>   
+    `
+    conversationWrapper.addEventListener('click', () => {
+        // change interface, change current
+        document.querySelector('.current').classList.remove('current')
+        conversationWrapper.classList.add('current')
+
+        // change model.currentConversation
+        model.currentConversation = conversation
+        view.showCurrentConversation()
+    })
+    document.querySelector('.list-conversations').appendChild(conversationWrapper)
 }

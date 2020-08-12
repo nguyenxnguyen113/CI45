@@ -1,10 +1,9 @@
-.chat-container .header {
-    text-align: center;
+.chat-container .conversation-header {
     height: 64px;
-    background: #037BFE;
     line-height: 64px;
-    color: #ffffff;
-    font-size: 28px;
+    text-align: center;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 24px;
 }
 
 .log-out {
@@ -17,38 +16,30 @@
     background: none;
 }
 
-.chat-container .conversation-header {
-    text-align: center;
-    height: 64px;
-    border-bottom: 1px solid #dbdbdb;
-    line-height: 64px;
-    font-size: 24px;
-}
-
 .chat-container {
     height: 100vh;
 }
 
 .chat-container .main {
     height: calc(100% - 64px);
+    display: flex;
 }
 
 .chat-container .main .conversation-detail {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 85%;
 }
 
 .conversation-detail .list-messages {
     flex-grow: 1;
-    overflow-y: auto;
 }
 
 #send-message-form .input-wrapper input {
     border: none;
     border-top: 1px solid #dbdbdb;
     height: 64px;
-    outline: none;
 }
 
 #send-message-form {
@@ -61,21 +52,21 @@
     top: 20px;
     border: none;
     background: none;
-    cursor: pointer;
     color: #037BFE;
     font-size: 24px;
 }
 
 #send-message-form .input-wrapper {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
-.message-container .content {
+.chat-container .list-messages {
     padding: 10px;
+    overflow-y: auto;
 }
 
 .chat-container .list-messages .message-container {
-    margin: 10px;
+    margin-bottom: 10px;
 }
 
 .chat-container .message-container .content {
@@ -98,4 +89,25 @@
 .chat-container .message-container.mine {
     display: flex;
     justify-content: flex-end;
+}
+
+.chat-container .aside-left {
+    width: 15%;
+    height: 100%;
+    border-right: 1px solid #dbdbdb;
+}
+
+.chat-container .create-conversation {
+    height: 64px;
+    line-height: 64px;
+    border-bottom: 1px solid #dbdbdb;
+    text-align: center;
+}
+
+.chat-container .list-conversations .conversation {
+    padding: 5px 10px;
+}
+
+.chat-container .list-conversations .conversation.current {
+    background-color: #dbdbdb;
 }

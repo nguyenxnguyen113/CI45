@@ -57,6 +57,7 @@ model.loadConversations = async() => {
         model.currentConversation = model.conversations[0]
         view.showCurrentConversation()
     }
+    view.showConversations()
 }
 model.listenConversationsChange = () => {
     let isFisrstRun = true
@@ -83,7 +84,14 @@ model.listenConversationsChange = () => {
                     view.addMessage(lastMessage)
                     view.scrollToEnd()
                 }
+            } else if (type === 'added') {
+                const docData = getDataFromDoc(oneChange.doc)
+                model.conversations.push(docData)
+                view.addConversation(docData)
             }
         }
     })
+}
+model.createConversation = (conversation) => {
+    firebase.firestore().collection(model.collectionName).add(conversation)
 }
