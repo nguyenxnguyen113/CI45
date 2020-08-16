@@ -73,19 +73,19 @@ model.listenConversationsChange = () => {
                 //update lai model conversations
             if (type === "modified") {
                 const docData = getDataFromDoc(oneChange.doc)
-                if (docData.users.length > model.currentConversation.users.length) {
-                    view.addUser(docData.users[docData.users.length - 1])
-                } else {
-                    for (let i = 0; i < model.conversations.length; i++) {
-                        if (model.conversations[i].id === docData.id) {
-                            model.conversations[i] = docData
-                        }
-                    }
-                    if (docData.id === model.currentConversation.id) {
+                if (docData.id === model.currentConversation.id) {
+                    if (docData.users.length > model.currentConversation.users.length) {
+                        view.addUser(docData.users[docData.users.length - 1])
+                    } else {
                         model.currentConversation = docData
                         const lastMessage = docData.messages[docData.messages.length - 1]
                         view.addMessage(lastMessage)
                         view.scrollToEnd()
+                    }
+                    for (let i = 0; i < model.conversations.length; i++) {
+                        if (model.conversations[i].id === docData.id) {
+                            model.conversations[i] = docData
+                        }
                     }
                 }
             } else if (type === 'added') {
