@@ -77,6 +77,7 @@ model.listenConversationsChange = () => {
                     if (docData.users.length > model.currentConversation.users.length) {
                         view.addUser(docData.users[docData.users.length - 1])
                     } else {
+
                         model.currentConversation = docData
                         const lastMessage = docData.messages[docData.messages.length - 1]
                         view.addMessage(lastMessage)
