@@ -111,3 +111,18 @@
 .chat-container .list-conversations .conversation.current {
     background-color: #dbdbdb;
 }
+
+.chat-container .aside-right {
+    padding: 10px;
+    border-left: 1px solid #dbdbdb;
+    width: 13%;
+}
+
+.chat-container .aside-right .user {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-container #add-user-form {
+    margin-top: 10px;
+}

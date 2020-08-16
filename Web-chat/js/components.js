@@ -83,35 +83,47 @@ components.loginScreen = `
 components.chatScreen = `
 <div class="chat-container">
 <div class="header">
-  MindX Chat
-  <button class="log-out"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+    MindX Chat
+    <button class="log-out"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
 </div>
 <div class="main">
-  <div class="aside-left">
-    <div class="create-conversation">
-      <button class="btn">+ New conversation</button>
-      
-    </div>
-    <div class="list-conversations">
+    <div class="aside-left">
+        <div class="create-conversation">
+            <button class="btn">+ New conversation</button>
 
+        </div>
+        <div class="list-conversations">
+
+        </div>
     </div>
-  </div>
-  <div class="conversation-detail">
-    <div class="conversation-header">
-      First conversation
-    </div>
-    <div class="list-messages">
-    </div>
-    <form id="send-message-form">
-      <div class="input-wrapper">
-        <input type="text" name="message"
-          placeholder="Type a message">
-      </div>
-      <button type="submit">
+
+    <div class="conversation-detail">
+        <div class="conversation-header">
+            First conversation
+        </div>
+        <div class="list-messages">
+        </div>
+        <form id="send-message-form">
+            <div class="input-wrapper">
+                <input type="text" name="message" placeholder="Type a message">
+            </div>
+            <button type="submit">
         <i class="fa fa-paper-plane" aria-hidden="true"></i>
       </button>
-    </form>
-  </div>
+        </form>
+    </div>
+    <div class="aside-right">
+        <div class="list-user">
+
+        </div>
+        <form id="add-user-form">
+            <div class="input-wrapper">
+                <input type="text" placeholder="Input friend email" name="email">
+                <div class="error" id="add-user-email-error"></div>               
+            </div>
+            <button class="btn">Add</button>
+        </form>
+    </div>
 </div>
 </div>
 `

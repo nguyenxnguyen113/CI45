@@ -61,6 +61,19 @@ view.setActiveScreen = (screenName, fromCreateConversation = false) => {
                     sendMessageForm.message.value = ""
                 }
             })
+            const addUserForm = document.getElementById('add-user-form')
+            addUserForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const user = {
+                    email: addUserForm.email.value
+                }
+                if (user.email.trim() === '') {
+                    alert('Please enter your email friend')
+                } else {
+                    model.addUser(user.email)
+                    addUserForm.email.value = ""
+                }
+            })
             if (!fromCreateConversation) {
                 model.loadConversations()
                 model.listenConversationsChange()
@@ -134,6 +147,20 @@ view.showCurrentConversation = () => {
     for (message of model.currentConversation.messages) {
         view.addMessage(message)
     }
+    view.showListUsers(model.currentConversation.users)
+    view.scrollToEnd()
+}
+view.showListUsers = (users) => {
+    document.querySelector('.list-user').innerHTML = ''
+    for (user of users) {
+        view.addUser(user)
+    }
+}
+view.addUser = (user) => {
+    const userWrapper = document.createElement('div')
+    userWrapper.classList.add('user')
+    userWrapper.innerText = user
+    document.querySelector('.list-user').appendChild(userWrapper)
 }
 view.scrollToEnd = () => {
     const listMessage = document.querySelector('.list-messages')
@@ -158,9 +185,11 @@ view.addConversation = (conversation) => {
         // change interface, change current
         document.querySelector('.current').classList.remove('current')
         conversationWrapper.classList.add('current')
-
-        // change model.currentConversation
-        model.currentConversation = conversation
+            // change model.currentConversation
+        for (oneConversation of model.conversations)
+            if (oneConversation.id == conversation.id) {
+                model.currentConversation = oneConversation
+            }
         view.showCurrentConversation()
     })
     document.querySelector('.list-conversations').appendChild(conversationWrapper)

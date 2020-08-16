@@ -58,7 +58,7 @@ controller.createConversation = (conservation) => {
     } else {
         view.setErrorMessage('conversation-email-error', '')
     }
-    if (conservation.title !== '' && conservation.friend !== '') {
+    if (conservation.title.trim() !== '' && conservation.friend.trim() !== '') {
         model.createConversation({
             title: conservation.title,
             users: [conservation.friend, model.currentUser.email],
