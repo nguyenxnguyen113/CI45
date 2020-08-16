@@ -71,18 +71,26 @@ model.listenConversationsChange = () => {
         for (oneChange of docChanges) {
             const type = oneChange.type
                 //update lai model conversations
-            if (type === "modified") {
-                const docData = getDataFromDoc(oneChange.doc)
-                for (let i = 0; i < model.conversations.length; i++) {
-                    if (model.conversations[i].id === docData.id) {
-                        model.conversations[i] = docData
+            if (type === 'modified') {
+                const docData = getDataFromDoc(oneChange.doc);
+                console.log(docData);
+                console.log(model.currentConversation.users);
+                if (docData.users.length > model.currentConversation.users.length) {
+                    // Update list users
+                    view.addUser(docData.users[docData.users.length - 1])
+                } else {
+                    // Update conversations
+                    for (let index = 0; index < model.conversations.length; index++) {
+                        if (model.conversations[index].id === docData.id) {
+                            model.conversations[index] = docData
+                        }
                     }
-                }
-                if (docData.id === model.currentConversation.id) {
-                    model.currentConversation = docData
-                    const lastMessage = docData.messages[docData.messages.length - 1]
-                    view.addMessage(lastMessage)
-                    view.scrollToEnd()
+                    // Update currentConversation
+                    if (docData.id === model.currentConversation.id) {
+                        model.currentConversation = docData;
+                        const lastMessage = docData.messages[docData.messages.length - 1];
+                        view.addMessage(lastMessage);
+                    }
                 }
             } else if (type === 'added') {
                 const docData = getDataFromDoc(oneChange.doc)
