@@ -41,6 +41,7 @@
 
 @media screen and (max-width: 768px) {
     .login-container .aside-right {
-        display: none;
+        display: block;
+        width: 100%;
     }
 }
