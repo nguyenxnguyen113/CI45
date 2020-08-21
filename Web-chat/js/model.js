@@ -59,6 +59,7 @@ model.loadConversations = async() => {
     }
     view.showConversations()
 }
+
 model.listenConversationsChange = () => {
     let isFisrstRun = true
     firebase.firestore().collection(model.collectionName).where('users', 'array-contains', model.currentUser.email).onSnapshot((res) => {
@@ -76,9 +77,9 @@ model.listenConversationsChange = () => {
                 if (docData.id === model.currentConversation.id) {
                     if (docData.users.length > model.currentConversation.users.length) {
                         view.addUser(docData.users[docData.users.length - 1])
+                        view.updateNumberUser(docData.id, docData.users.length)
+                            // view.setActiveScreen('chatScreen')
                     } else {
-
-                        model.currentConversation = docData
                         const lastMessage = docData.messages[docData.messages.length - 1]
                         view.addMessage(lastMessage)
                         view.scrollToEnd()
@@ -89,6 +90,10 @@ model.listenConversationsChange = () => {
                         }
                     }
                 }
+                if (docData.messages[docData.messages.length - 1].owner !== model.currentUser.email) {
+                    view.showNotification(docData.id)
+                }
+
             } else if (type === 'added') {
                 const docData = getDataFromDoc(oneChange.doc)
                 model.conversations.push(docData)
